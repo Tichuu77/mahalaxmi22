@@ -2,7 +2,14 @@
 
 import { Award, Building2, CheckCircle2, Shield, TrendingUp, Users } from "lucide-react"
 
-const features = ["Premium Materials", "Expert Craftsmanship", "Quality Assurance", "Timely Delivery", "Value Appreciation", "Modern Architecture"]
+const features = [
+  "Premium Materials",
+  "Expert Craftsmanship",
+  "Quality Assurance",
+  "Timely Delivery",
+  "Value Appreciation",
+  "Modern Architecture",
+]
 
 const stats = [
   { icon: Building2, value: "70+", label: "Completed Projects" },
@@ -13,38 +20,160 @@ const stats = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="bg-white px-4 py-14 md:px-8">
-      <div className="mx-auto max-w-7xl rounded-[32px] border border-[var(--green-border)] bg-[linear-gradient(135deg,#ffffff_10%,#f5f2ec_90%)] p-6 shadow-sm md:p-10">
-        <div className="grid gap-7 md:grid-cols-[1.05fr_.95fr]">
+    <section
+      id="about"
+      className="relative overflow-hidden"
+      style={{ background: "linear-gradient(160deg, #f5f2ec 0%, #fff 60%, #f5f2ec 100%)" }}
+    >
+      {/* Decorative blob */}
+      <div
+        className="pointer-events-none absolute right-0 top-0 h-[400px] w-[400px] rounded-full opacity-40"
+        style={{ background: "radial-gradient(circle, rgba(201,134,43,0.08) 0%, transparent 70%)" }}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
+        {/* Mobile heading */}
+        <div className="mb-8 md:hidden">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--gold)]">Our Story</p>
+          <h2
+            className="text-4xl font-bold leading-tight text-[var(--text-dark)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Building Dreams
+            <br />
+            <em className="not-italic text-[var(--green)]">Since 2012</em>
+          </h2>
+        </div>
+
+        <div className="grid gap-10 md:grid-cols-2 md:gap-14 md:items-center">
+          {/* Left */}
           <article>
-            <p className="text-xs font-semibold tracking-[0.25em] text-[var(--gold)]">OUR STORY</p>
-            <h2 className="mt-3 text-3xl leading-tight md:text-5xl">Building Dreams Since 2012</h2>
-            <p className="mt-4 text-[var(--text-mid)] md:text-lg">
-              Mahalaxmi Infra is Nagpur&apos;s most trusted name in NMRDA sanctioned and RERA approved residential plots. With 70+ completed projects and 17,000+ families settled, we&apos;ve turned land into lifestyles for over a decade.
-            </p>
-            <div className="mt-6 grid grid-cols-2 gap-2">
-              {features.map((item) => <div key={item} className="rounded-xl border border-[var(--green-border)] bg-white px-3 py-2 text-sm">{item}</div>)}
+            {/* Desktop heading */}
+            <div className="hidden md:block">
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--gold)]">Our Story</p>
+              <h2
+                className="mb-5 text-5xl font-bold leading-tight text-[var(--text-dark)]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Building Dreams
+                <br />
+                <em className="not-italic text-[var(--green)]">Since 2012</em>
+              </h2>
             </div>
-            <div className="mt-5 flex flex-wrap gap-2 text-xs">
-              <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 ring-1 ring-[var(--green-border)]"><Shield size={12} className="text-[var(--gold)]" />NMRDA Sanctioned</span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 ring-1 ring-[var(--green-border)]"><CheckCircle2 size={12} className="text-[var(--gold)]" />RERA Approved</span>
+
+            <p className="mb-6 text-base leading-[1.8] text-[var(--text-mid)] md:text-lg">
+              Mahalaxmi Infra is Nagpur&apos;s most trusted name in NMRDA sanctioned and RERA approved residential plots.
+              With 70+ completed projects and 17,000+ families settled, we&apos;ve turned land into lifestyles for over
+              a decade.
+            </p>
+
+            {/* Features Grid */}
+            <div className="mb-6 grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {features.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center gap-2 rounded-xl px-3 py-2.5"
+                  style={{
+                    background: "rgba(48,83,74,0.05)",
+                    border: "1px solid rgba(48,83,74,0.1)",
+                  }}
+                >
+                  <div
+                    className="h-1.5 w-1.5 flex-shrink-0 rounded-full"
+                    style={{ background: "var(--gold)" }}
+                  />
+                  <span className="text-xs font-semibold text-[var(--text-dark)]">{item}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap gap-2">
+              <span
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold text-[var(--green)]"
+                style={{ background: "rgba(48,83,74,0.07)", border: "1px solid rgba(48,83,74,0.15)" }}
+              >
+                <Shield size={12} className="text-[var(--gold)]" /> NMRDA Sanctioned
+              </span>
+              <span
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold text-[var(--green)]"
+                style={{ background: "rgba(48,83,74,0.07)", border: "1px solid rgba(48,83,74,0.15)" }}
+              >
+                <CheckCircle2 size={12} className="text-[var(--gold)]" /> RERA Approved
+              </span>
             </div>
           </article>
 
-          <article className="grid gap-3 md:grid-cols-2">
-            {stats.map((item) => {
+          {/* Right – Stat Cards */}
+          <div className="grid grid-cols-2 gap-3">
+            {stats.map((item, i) => {
               const Icon = item.icon
+              const isDark = i % 2 === 1
               return (
-                <div key={item.label} className="rounded-2xl bg-[var(--green)] p-4 text-white shadow-lg">
-                  <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/10">
-                    <Icon size={16} className="text-[var(--gold)]" />
+                <div
+                  key={item.label}
+                  className="group relative overflow-hidden rounded-3xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                  style={
+                    isDark
+                      ? {
+                          background: "linear-gradient(135deg, #30534A, #1f3731)",
+                          boxShadow: "0 8px 28px rgba(48,83,74,0.25)",
+                        }
+                      : {
+                          background: "#fff",
+                          border: "1px solid rgba(48,83,74,0.08)",
+                          boxShadow: "0 2px 16px rgba(0,0,0,0.06)",
+                        }
+                  }
+                >
+                  {/* Corner glow */}
+                  <div
+                    className="absolute right-0 top-0 h-12 w-12 rounded-bl-full"
+                    style={{
+                      background: isDark ? "rgba(201,134,43,0.12)" : "rgba(48,83,74,0.04)",
+                    }}
+                  />
+                  <div
+                    className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl"
+                    style={{
+                      background: isDark ? "rgba(255,255,255,0.1)" : "rgba(48,83,74,0.08)",
+                    }}
+                  >
+                    <Icon size={18} className="text-[var(--gold)]" />
                   </div>
-                  <p className="mt-3 text-2xl font-bold">{item.value}</p>
-                  <p className="text-sm text-white/75">{item.label}</p>
+                  <p
+                    className="text-3xl font-bold text-[var(--gold)] leading-none"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {item.value}
+                  </p>
+                  <p
+                    className="mt-1.5 text-xs font-medium"
+                    style={{ color: isDark ? "rgba(255,255,255,0.55)" : "#999" }}
+                  >
+                    {item.label}
+                  </p>
                 </div>
               )
             })}
-          </article>
+
+            {/* RERA Note - full width */}
+            <div
+              className="col-span-2 flex items-center gap-3 rounded-2xl px-4 py-3"
+              style={{
+                background: "rgba(201,134,43,0.06)",
+                border: "1px solid rgba(201,134,43,0.18)",
+              }}
+            >
+              <div
+                className="h-2 w-2 flex-shrink-0 rounded-full"
+                style={{ background: "var(--gold)", boxShadow: "0 0 6px rgba(201,134,43,0.6)" }}
+              />
+              <p className="text-xs font-semibold text-[#8a5a1a]">
+                MAHA RERA No. A50500044725 · Legal Clear · Bank Approved
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
