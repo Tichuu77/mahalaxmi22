@@ -1,5 +1,6 @@
 "use client"
 
+import { CheckCircle2 } from "lucide-react"
 import { useState } from "react"
 
 const guides = [
@@ -33,22 +34,41 @@ export function UserGuideSection() {
   const [active, setActive] = useState(0)
 
   return (
-    <section id="user-guide" className="bg-white px-4 py-12 md:px-8">
+    <section id="user-guide" className="bg-white px-4 py-14 md:px-8">
       <div className="mx-auto max-w-7xl">
-        <h2 className="text-3xl md:text-5xl">How to Get Started</h2>
-        <p className="mt-2 text-[var(--text-mid)]">Follow our simple guide to find, visit, finance and own your dream plot in Nagpur.</p>
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-xs tracking-[0.2em] text-[var(--gold)]">HOW IT WORKS</p>
+            <h2 className="mt-2 text-3xl md:text-5xl">How to Get Started</h2>
+          </div>
+          <p className="max-w-md text-sm text-[var(--text-mid)]">Follow our simple guide to find, visit, finance and own your dream plot in Nagpur.</p>
+        </div>
 
-        <div className="mt-6 grid gap-3 md:grid-cols-2">
-          {guides.map((item, i) => (
-            <article key={item.number} className={`rounded-2xl border p-4 ${active === i ? "border-[var(--gold)] bg-[var(--gold-light)]" : "border-[var(--green-border)] bg-[var(--cream)]"}`}>
-              <button onClick={() => setActive(i)} className="w-full text-left">
-                <p className="text-xs font-semibold tracking-widest text-[var(--gold)]">STEP {item.number}</p>
-                <h3 className="mt-1 text-lg font-semibold">{item.title}</h3>
+        <div className="grid gap-4 lg:grid-cols-[.9fr_1.1fr]">
+          <div className="flex gap-3 overflow-x-auto pb-2 lg:grid lg:overflow-visible">
+            {guides.map((item, i) => (
+              <button
+                key={item.number}
+                onClick={() => setActive(i)}
+                className={`min-w-[230px] rounded-2xl border p-4 text-left transition ${active === i ? "border-[var(--gold)] bg-[var(--gold-light)]" : "border-[var(--green-border)] bg-[var(--cream)] hover:bg-white"}`}
+              >
+                <p className="text-xs font-semibold tracking-[0.2em] text-[var(--gold)]">STEP {item.number}</p>
+                <h3 className="mt-2 text-lg font-semibold text-[var(--green)]">{item.title}</h3>
                 <p className="mt-1 text-sm text-[var(--text-mid)]">{item.description}</p>
               </button>
-              {active === i && <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--text-mid)]">{item.details.map((d) => <li key={d}>{d}</li>)}</ul>}
-            </article>
-          ))}
+            ))}
+          </div>
+
+          <article className="rounded-3xl border border-[var(--green-border)] bg-[linear-gradient(160deg,#ffffff,#f5f2ec)] p-5 md:p-7">
+            <p className="text-xs font-semibold tracking-[0.2em] text-[var(--gold)]">ACTIVE STEP {guides[active].number}</p>
+            <h3 className="mt-2 text-2xl font-semibold text-[var(--green)]">{guides[active].title}</h3>
+            <p className="mt-2 text-[var(--text-mid)]">{guides[active].description}</p>
+            <ul className="mt-4 space-y-2">
+              {guides[active].details.map((d) => (
+                <li key={d} className="flex items-start gap-2 text-sm text-[var(--text-mid)]"><CheckCircle2 size={15} className="mt-0.5 text-[var(--gold)]" />{d}</li>
+              ))}
+            </ul>
+          </article>
         </div>
       </div>
     </section>
