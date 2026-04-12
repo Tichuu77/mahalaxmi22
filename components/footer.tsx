@@ -46,11 +46,12 @@ export function Footer() {
               since 2012.
             </p>
             <div className="space-y-2">
-              <a href="tel:+919326709970" className="flex items-center gap-2 text-xs text-white/50 hover:text-[var(--gold)] transition">
-                <Phone size={11} /> +91 9326709970
+              <p className="text-sm font-bold text-white">PARMANAND BOPCHE</p>
+              <a href="tel:+919822942446" className="flex items-center gap-2 text-xs text-white/50 hover:text-[var(--gold)] transition">
+                <Phone size={11} /> +91 9822942446
               </a>
-              <a href="mailto:kuwarb38@gmail.com" className="flex items-center gap-2 text-xs text-white/50 hover:text-[var(--gold)] transition">
-                <Mail size={11} /> kuwarb38@gmail.com
+              <a href="mailto:pbopche70@gmail.com" className="flex items-center gap-2 text-xs text-white/50 hover:text-[var(--gold)] transition">
+                <Mail size={11} /> pbopche70@gmail.com
               </a>
               <div className="flex items-start gap-2 text-xs text-white/50">
                 <MapPin size={11} className="mt-0.5 flex-shrink-0" />
@@ -101,7 +102,7 @@ export function Footer() {
               className="mt-4 rounded-2xl px-3 py-2 text-center text-[9px] font-semibold tracking-widest text-white/30"
               style={{ border: "1px solid rgba(255,255,255,0.07)" }}
             >
-              A50500037880 · NMRDA · RERA · ISO
+              A50500003615 · NMRDA · RERA · ISO
             </div>
           </div>
         </div>

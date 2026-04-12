@@ -69,7 +69,7 @@ export function Navigation() {
           {/* Desktop CTA */}
           <div className="hidden items-center gap-2 md:flex">
             <a
-              href="tel:+919326709970"
+              href="tel:+919822942446"
               className="flex items-center gap-2 rounded-full border border-[var(--gold-border)] bg-[var(--gold-light)] px-3 py-1.5 text-xs font-semibold text-[var(--gold)] transition hover:bg-[var(--gold)] hover:text-white"
             >
               <Phone size={11} /> Call Now
@@ -135,7 +135,7 @@ export function Navigation() {
 
           <div className="grid grid-cols-2 gap-3">
             <a
-              href="tel:+919326709970"
+              href="tel:+919822942446"
               onClick={() => setOpen(false)}
               className="flex items-center justify-center gap-2 rounded-2xl border border-[var(--gold-border)] bg-[var(--gold-light)] py-3 text-sm font-bold text-[var(--gold)]"
             >

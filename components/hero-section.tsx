@@ -126,7 +126,7 @@ export function HeroSection() {
               Explore Projects <ArrowRight size={14} />
             </a>
             <a
-              href="tel:+919326709970"
+              href="tel:+919822942446"
               className="flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-semibold text-white/80 transition-all hover:text-white hover:border-white/25"
               style={{
                 background: "rgba(255,255,255,0.05)",
@@ -180,7 +180,7 @@ export function HeroSection() {
               }}
             >
               <p className="text-[10px] font-bold text-[var(--gold)]">RERA Approved</p>
-              <p className="text-[8px] text-white/35 mt-0.5 tracking-[0.06em]">A50500044725</p>
+              <p className="text-[8px] text-white/35 mt-0.5 tracking-[0.06em]">A50500003615</p>
             </div>
           </div>
         </div>

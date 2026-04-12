@@ -95,7 +95,7 @@ export default function FAQSection() {
             </p>
 
             <a
-              href="https://wa.me/919326709970"
+              href="https://wa.me/919822942446"
               target="_blank"
               className="relative mb-6 inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-bold text-[var(--green)] shadow-lg transition hover:shadow-xl"
             >

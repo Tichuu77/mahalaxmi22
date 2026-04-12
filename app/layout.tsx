@@ -19,7 +19,7 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 })
 
-const BASE_URL = "https://kb.mahalaxmiinfra.in"
+const BASE_URL = "https://pb.mahalaxmiinfra.in"
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -103,8 +103,8 @@ const structuredData = {
       url: BASE_URL,
       logo: { "@type": "ImageObject", url: `${BASE_URL}/Mahalaxmi Infra new Logo.png` },
       description: "NMRDA sanctioned and RERA approved residential plots in Nagpur with 70+ completed projects.",
-      telephone: "+919970501128",
-      email: "kuwarb38@gmail.com",
+      telephone: "+919822942446",
+      email: "pbopche70@gmail.com",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Nagpur",

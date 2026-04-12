@@ -4,7 +4,7 @@ export default function WhatsappButton() {
   return (
     <div className="fixed bottom-6 right-5 z-40 md:bottom-8 md:right-8">
       <a
-        href="https://wa.me/+919326709970?text=Enquiry for more details"
+        href="https://wa.me/+919822942446?text=Enquiry for more details"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with Mahalaxmi Infra on WhatsApp"

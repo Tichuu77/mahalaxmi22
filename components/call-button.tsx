@@ -4,9 +4,9 @@ export default function CallButton() {
   return (
     <div className="fixed bottom-8 left-8 z-40">
       <a
-        href="tel:+919326709970"
+        href="tel:+919822942446"
         className="relative group"
-        aria-label="Call Mahalaxmi Infra at +91 9326709970"
+        aria-label="Call Mahalaxmi Infra at +91 9822942446"
       >
         {/* Pulse ring */}
         <span

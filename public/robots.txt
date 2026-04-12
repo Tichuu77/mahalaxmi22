@@ -8,7 +8,7 @@ Disallow: /*.json$
 Crawl-delay: 1
 
 # Sitemaps
-Sitemap: https://kb.mahalaxmiinfra.in/sitemap.xml
+Sitemap: https://pb.mahalaxmiinfra.in/sitemap.xml
 
 # Googlebot
 User-agent: Googlebot

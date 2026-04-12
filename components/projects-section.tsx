@@ -134,7 +134,7 @@ function ProjectCard({ item, idx, total }: { item: Project; idx: number; total: 
         )}
 
         <a
-          href={`https://wa.me/919326709970?text=${encodeURIComponent(`Hi, I'm interested in ${item.title}.`)}`}
+          href={`https://wa.me/919822942446?text=${encodeURIComponent(`Hi, I'm interested in ${item.title}.`)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-sm font-bold text-white transition-all active:scale-95 hover:opacity-90"

@@ -33,8 +33,8 @@ export default function ContactSection() {
   }
 
   const contactInfo = [
-    { icon: Phone, label: "Phone", value: "+91 9326709970", href: "tel:+919326709970" },
-    { icon: Mail, label: "Email", value: "kuwarb38@gmail.com", href: "mailto:kuwarb38@gmail.com" },
+    { icon: Phone, label: "Phone", value: "+91 9822942446", href: "tel:+919822942446" },
+    { icon: Mail, label: "Email", value: "pbopche70@gmail.com", href: "mailto:pbopche70@gmail.com" },
     { icon: MapPin, label: "Office", value: "Flat 103/104, Laxmivihar Apartment, Wardha Road, Nagpur 440025", href: "#" },
   ]
 
@@ -111,7 +111,7 @@ export default function ContactSection() {
 
             {/* Quick action */}
             <a
-              href="https://wa.me/919326709970?text=Hi, I want to know more about your plots."
+              href="https://wa.me/919822942446?text=Hi, I want to know more about your plots."
               target="_blank"
               className="relative mt-8 flex items-center justify-center gap-2 rounded-2xl py-3.5 text-sm font-bold text-[var(--green)] transition hover:opacity-90"
               style={{ background: "#fff", boxShadow: "0 4px 14px rgba(0,0,0,0.15)" }}
