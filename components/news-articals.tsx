@@ -9,15 +9,19 @@ const newsArticles = [
 
 export default function NewsArticles() {
   return (
-    <section id="news" className="bg-[var(--cream)] px-4 py-12 md:px-8">
+    <section id="news" className="bg-[var(--cream)] px-4 py-14 md:px-8">
       <div className="mx-auto max-w-7xl">
-        <h2 className="text-3xl md:text-5xl">News & Articles</h2>
-        <div className="mt-6 flex gap-3 overflow-x-auto pb-2 md:grid md:grid-cols-2 md:overflow-visible">
+        <div className="mb-6 flex items-end justify-between">
+          <h2 className="text-3xl md:text-5xl">News & Articles</h2>
+          <p className="hidden text-sm text-[var(--text-muted)] md:block">Insights from Mahalaxmi Infra</p>
+        </div>
+        <div className="flex gap-3 overflow-x-auto pb-2 md:grid md:grid-cols-2 md:overflow-visible">
           {newsArticles.map((article) => (
-            <article key={article.title} className="min-w-[280px] rounded-2xl border border-[var(--green-border)] bg-white p-4">
-              <p className="text-xs font-semibold text-[var(--gold)]">{article.category} · {article.date}</p>
-              <h3 className="mt-2 font-semibold text-[var(--green)]">{article.title}</h3>
+            <article key={article.title} className="group min-w-[280px] rounded-2xl border border-[var(--green-border)] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+              <p className="text-xs font-semibold tracking-wider text-[var(--gold)]">{article.category} · {article.date}</p>
+              <h3 className="mt-2 text-lg font-semibold text-[var(--green)]">{article.title}</h3>
               <p className="mt-2 text-sm text-[var(--text-mid)]">{article.summary}</p>
+              <div className="mt-3 h-1 w-0 rounded-full bg-[var(--gold)] transition-all group-hover:w-20" />
             </article>
           ))}
         </div>

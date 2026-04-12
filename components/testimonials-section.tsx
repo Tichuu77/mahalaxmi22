@@ -10,16 +10,16 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section id="testimonials" className="bg-[var(--green)] px-4 py-12 md:px-8">
+    <section id="testimonials" className="bg-[linear-gradient(160deg,#30534A_0%,#1f3731_100%)] px-4 py-14 md:px-8">
       <div className="mx-auto max-w-7xl">
         <h2 className="text-3xl text-white md:text-5xl">Words from Our Happy Families</h2>
         <div className="mt-6 flex gap-4 overflow-x-auto pb-2">
           {testimonials.map((item) => (
-            <blockquote key={item.name} className="min-w-[300px] max-w-[360px] rounded-3xl bg-white p-5">
+            <blockquote key={item.name} className="min-w-[310px] max-w-[370px] rounded-3xl border border-white/20 bg-white/95 p-5 shadow-xl">
               <div className="mb-3 flex text-[var(--gold)]">{Array.from({ length: 5 }).map((_, i) => <Star key={i} size={14} fill="currentColor" />)}</div>
-              <p className="text-sm text-[var(--text-mid)]">“{item.content}”</p>
+              <p className="text-sm leading-relaxed text-[var(--text-mid)]">“{item.content}”</p>
               <footer className="mt-4 flex items-center gap-3">
-                <img src={item.image} alt={item.name} loading="lazy" className="h-10 w-10 rounded-full object-cover" />
+                <img src={item.image} alt={item.name} loading="lazy" className="h-11 w-11 rounded-full object-cover ring-2 ring-[var(--gold-border)]" />
                 <cite className="not-italic text-sm font-semibold">{item.name} <span className="font-normal text-[var(--text-muted)]">· {item.location}</span></cite>
               </footer>
             </blockquote>
