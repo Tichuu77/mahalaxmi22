@@ -1,142 +1,66 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { ArrowRight, MapPin, TrendingUp, Award, Shield, CheckCircle2 } from "lucide-react"
+import { ArrowRight, Award, CheckCircle2, MapPin, Shield, TrendingUp } from "lucide-react"
 
-const STATS = [
-  { value: "70+",  label: "Projects"      },
-  { value: "17K+", label: "Families"      },
+const stats = [
+  { value: "70+", label: "Projects" },
+  { value: "17K+", label: "Families" },
   { value: "100%", label: "RERA Approved" },
 ]
 
-const TRUST = [
-  { icon: Shield,       label: "NMRDA Sanctioned" },
-  { icon: CheckCircle2, label: "RERA Approved"    },
-  { icon: Award,        label: "ISO Certified"    },
+const trust = [
+  { icon: Shield, label: "NMRDA Sanctioned" },
+  { icon: CheckCircle2, label: "RERA Approved" },
+  { icon: Award, label: "ISO Certified" },
 ]
 
 export function HeroSection() {
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setLoaded(true))
-    return () => cancelAnimationFrame(raf)
-  }, [])
-
-  const L = loaded
-
   return (
-    <section
-      id="home"
-      aria-label="Mahalaxmi Infra – Premium Plots in Nagpur"
-      className="hero"
-    >
-      {/* Background layers */}
-      <div className="hero__bg" aria-hidden="true" />
-      <div className="hero__bg-pattern" aria-hidden="true" />
-      <div className="hero__glow-1" aria-hidden="true" />
-      <div className="hero__glow-2" aria-hidden="true" />
+    <section id="home" className="relative overflow-hidden bg-[var(--cream)] px-4 pb-10 pt-28 md:px-8 md:pt-36">
+      <div className="pointer-events-none absolute -left-20 top-20 h-72 w-72 rounded-full bg-[var(--gold-light)] blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-[var(--green-light)] blur-3xl" />
 
-      <div className="hero__inner">
-        <div className="hero__grid">
+      <div className="relative mx-auto grid max-w-7xl gap-6 md:grid-cols-[1.08fr_.92fr] md:items-center">
+        <div className="space-y-5">
+          <p className="inline-flex items-center gap-2 rounded-full border border-[var(--gold-border)] bg-white/90 px-3 py-1 text-xs font-semibold text-[var(--gold)]">
+            <MapPin size={12} /> Nagpur, Maharashtra
+          </p>
+          <h1 className="text-4xl font-semibold leading-[1.05] text-[var(--text-dark)] md:text-7xl">
+            Premium <span className="text-[var(--gold)]">RERA</span><br />Approved Plots<br />in Nagpur
+          </h1>
+          <p className="max-w-xl text-[var(--text-mid)] md:text-lg">
+            NMRDA sanctioned residential plots near MIHAN, Wardha Road & Hingna. Starting <strong>₹22 Lakh</strong>. Bank loan up to 90% available.
+          </p>
+          <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2">
+            {stats.map((item) => (
+              <div key={item.label} className="min-w-[150px] rounded-2xl border border-[var(--green-border)] bg-white/90 p-3 shadow-sm backdrop-blur">
+                <p className="text-2xl font-bold text-[var(--green)]">{item.value}</p>
+                <p className="text-xs uppercase tracking-wider text-[var(--text-muted)]">{item.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a href="#projects" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[var(--green)] to-[#3f6f63] px-6 py-3 text-sm font-semibold text-white shadow-lg">Explore Projects <ArrowRight size={14} /></a>
+            <a href="#contact" className="rounded-full border border-[var(--gold-border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--gold)]">Schedule Visit</a>
+          </div>
+        </div>
 
-          {/* ── Text Column ── */}
-          <div>
-            <div className={`rv ${L ? "on" : ""} d0 hero__eyebrow`}>
-              <MapPin size={11} className="hero__eyebrow-icon" aria-hidden="true" />
-              <span className="hero__eyebrow-text">Nagpur, Maharashtra</span>
-            </div>
-
-            <h1 className={`rv ${L ? "on" : ""} d1 hero__h1`}>
-              Premium <em>RERA</em><br />
-              Approved Plots<br />
-              <span>in Nagpur</span>
-            </h1>
-
-            <p className={`rv ${L ? "on" : ""} d2 hero__sub`}>
-              NMRDA sanctioned residential plots near MIHAN, Wardha Road &amp; Hingna.
-              Starting <strong>₹22 Lakh</strong>. Bank loan up to 90% available.
-            </p>
-
-            <div className={`rv ${L ? "on" : ""} d2 hero__stats`} role="list" aria-label="Key statistics">
-              {STATS.map(s => (
-                <div key={s.label} className="hero__stat" role="listitem">
-                  <div className="hero__stat-val">{s.value}</div>
-                  <div className="hero__stat-lbl">{s.label}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className={`rv ${L ? "on" : ""} d3 hero__cta-group`}>
-              <a
-                href="#projects"
-                className="hero__btn-primary"
-                aria-label="Explore our projects"
-              >
-                Explore Projects
-                <ArrowRight size={15} aria-hidden="true" />
-              </a>
-              <a href="#contact" className="hero__btn-secondary">
-                Schedule Visit
-              </a>
+        <div className="space-y-3">
+          <div className="relative rounded-[30px] border border-[var(--green-border)] bg-white/90 p-3 shadow-xl backdrop-blur">
+            <img src="/hero-bg.jpeg" alt="Mahalaxmi Infra premium residential plots in Nagpur" fetchPriority="high" className="h-[460px] w-full rounded-3xl object-cover" />
+            <div className="absolute bottom-6 left-6 rounded-2xl bg-[color:rgba(9,18,16,.75)] px-4 py-3 text-white backdrop-blur">
+              <p className="text-[11px] uppercase tracking-widest text-white/70">Prime Offer</p>
+              <p className="mt-1 flex items-center gap-1 text-xl font-bold">₹22L <TrendingUp size={14} className="text-[var(--gold)]" /></p>
             </div>
           </div>
 
-          {/* ── Image Column (desktop) ── */}
-          <div className={`rv-r ${L ? "on" : ""} d2 hero__img-panel`}>
-            <div className="hero__photo">
-              <img
-                src="/hero-bg.jpeg"
-                alt="Mahalaxmi Infra premium residential plots in Nagpur"
-                loading="eager"
-                fetchPriority="high"
-                width={520}
-                height={650}
-              />
-              <div className="hero__photo-overlay" aria-hidden="true" />
-            </div>
-
-            <div className="hero__badge hero__badge--price" aria-label="Starting price ₹22 Lakh">
-              <TrendingUp size={15} className="hero__badge--price-icon" aria-hidden="true" />
-              <div>
-                <div className="hero__badge--price-val">₹22L</div>
-                <div className="hero__badge--price-lbl">Starting Price</div>
-              </div>
-            </div>
-
-            <div className="hero__badge hero__badge--rera" aria-label="RERA Approved">
-              <Award size={13} className="icon-gold" aria-hidden="true" />
-              <div>
-                <div className="hero__badge--rera-title">RERA Approved</div>
-                <div className="hero__badge--rera-sub">MAHA RERA</div>
-              </div>
-            </div>
+          <div className="flex flex-wrap gap-2">
+            {trust.map((item) => {
+              const Icon = item.icon
+              return <span key={item.label} className="inline-flex items-center gap-2 rounded-full border border-[var(--green-border)] bg-white/90 px-3 py-2 text-xs shadow-sm"><Icon size={12} className="text-[var(--gold)]" />{item.label}</span>
+            })}
           </div>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className={`rv ${L ? "on" : ""} d7 hero__scroll`} aria-hidden="true">
-        <div className="hero__scroll-line">
-          <div className="hero__scroll-track" />
-          <div className="hero__scroll-dot" />
-        </div>
-        <span className="hero__scroll-lbl">SCROLL</span>
-      </div>
-
-      {/* Trust strip */}
-      <div className={`rv ${L ? "on" : ""} d6 hero__trust`} aria-label="Certifications">
-        {TRUST.map(t => {
-          const Icon = t.icon
-          return (
-            <div key={t.label} className="hero__trust-item">
-              <div className="hero__trust-icon" aria-hidden="true">
-                <Icon size={10} />
-              </div>
-              <span className="hero__trust-label">{t.label}</span>
-            </div>
-          )
-        })}
       </div>
     </section>
   )

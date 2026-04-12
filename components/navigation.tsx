@@ -1,116 +1,45 @@
 "use client"
 
-import { useState, useCallback, useEffect, memo } from "react"
-import { X, Menu } from "lucide-react"
+import { useState } from "react"
+import { Menu, X } from "lucide-react"
 
 const navLinks = [
-  { href: "#about",        label: "About"        },
-  { href: "#amenities",    label: "Amenities"    },
-  { href: "#projects",     label: "Projects"     },
-  { href: "#gallery",      label: "Gallery"      },
-  { href: "#user-guide",   label: "How It Works" },
-  { href: "#news",         label: "News"         },
+  { href: "#about", label: "About" },
+  { href: "#amenities", label: "Amenities" },
+  { href: "#projects", label: "Projects" },
+  { href: "#gallery", label: "Gallery" },
+  { href: "#user-guide", label: "How It Works" },
+  { href: "#news", label: "News" },
   { href: "#testimonials", label: "Testimonials" },
-  { href: "#contact",      label: "Contact"      },
+  { href: "#contact", label: "Contact" },
 ]
 
-const DesktopLinks = memo(() => (
-  <nav className="nav__links" aria-label="Desktop navigation">
-    {navLinks.map(link => (
-      <a key={link.href} href={link.href} className="nav__link">{link.label}</a>
-    ))}
-  </nav>
-))
-DesktopLinks.displayName = "DesktopLinks"
-
 export function Navigation() {
-  const [isOpen, setIsOpen]     = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40)
-    window.addEventListener("scroll", fn, { passive: true })
-    return () => window.removeEventListener("scroll", fn)
-  }, [])
-
-  const toggle    = useCallback(() => setIsOpen(p => !p), [])
-  const closeMenu = useCallback(() => setIsOpen(false), [])
+  const [open, setOpen] = useState(false)
 
   return (
-    <>
-      <header role="banner">
-        <nav
-          role="navigation"
-          aria-label="Main navigation"
-          className={`nav ${scrolled ? "nav--scrolled" : "nav--top"}`}
-        >
-          <div className="nav__inner">
-            <a href="#" aria-label="Mahalaxmi Infra – Home" className="nav__logo">
-              <img
-                src="/Malaxmi-Final-Logo-1.png"
-                alt="Mahalaxmi Infra Logo"
-                width={46}
-                height={46}
-                className="nav__logo-img"
-                fetchPriority="high"
-                decoding="sync"
-              />
-              <div>
-                <div className="nav__logo-name">Mahalaxmi Infra</div>
-                <div className="nav__logo-sub">RERA Approved</div>
-              </div>
-            </a>
+    <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3 md:px-6">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-[var(--green-border)] bg-[color:rgba(245,242,236,.88)] px-4 py-3 shadow-lg backdrop-blur-xl md:px-6" aria-label="Main navigation">
+        <a href="#home" className="flex items-center gap-2">
+          <img src="/Malaxmi-Final-Logo-1.png" alt="Mahalaxmi Infra Logo" className="h-10 w-10 rounded-xl object-cover ring-1 ring-[var(--gold-border)]" />
+          <div><p className="text-sm font-semibold">Mahalaxmi Infra</p><p className="text-[10px] tracking-[0.2em] text-[var(--text-muted)]">RERA APPROVED</p></div>
+        </a>
 
-            <DesktopLinks />
+        <div className="hidden items-center gap-1 rounded-full border border-[var(--green-border)] bg-white/80 p-1 md:flex">
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href} className="rounded-full px-3 py-1.5 text-xs font-medium transition hover:bg-[var(--green)] hover:text-white">{l.label}</a>
+          ))}
+        </div>
 
-            <div className="nav__cta">
-              <a href="#contact" className="nav__cta-btn">Get Started</a>
-            </div>
+        <a href="#contact" className="hidden rounded-full bg-gradient-to-r from-[var(--green)] to-[#3f6f63] px-4 py-2 text-xs font-semibold text-white md:block">Book Visit</a>
+        <button className="rounded-xl border border-[var(--green-border)] bg-white p-2 md:hidden" onClick={() => setOpen((p) => !p)} aria-label="Menu">{open ? <X size={16} /> : <Menu size={16} />}</button>
+      </nav>
 
-            <div className="nav__toggle">
-              <button
-                onClick={toggle}
-                className="nav__toggle-btn"
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isOpen}
-                aria-controls="mobile-menu"
-              >
-                {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-              </button>
-            </div>
-          </div>
-        </nav>
-      </header>
-
-      {isOpen && (
-        <div
-          id="mobile-menu"
-          className="nav__drawer"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Navigation menu"
-        >
-          <div className="nav__drawer-label">
-            <div className="nav__drawer-label-line" />
-            <span className="nav__drawer-label-text">Navigation</span>
-          </div>
-          <nav className="nav__drawer-links" aria-label="Mobile navigation">
-            {navLinks.map(link => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="nav__drawer-link"
-                onClick={closeMenu}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-          <a href="#contact" className="nav__drawer-cta" onClick={closeMenu}>
-            Get Started
-          </a>
+      {open && (
+        <div className="mx-auto mt-2 grid max-w-7xl gap-2 rounded-2xl border border-[var(--green-border)] bg-white p-3 shadow-md md:hidden">
+          {navLinks.map((l) => <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-lg px-2 py-2 text-sm hover:bg-[var(--cream)]">{l.label}</a>)}
         </div>
       )}
-    </>
+    </header>
   )
 }

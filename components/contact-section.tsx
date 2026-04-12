@@ -1,101 +1,14 @@
 "use client"
 
-import { useState, useRef, useEffect, useCallback, memo } from "react"
-import { Phone, Mail, MapPin, CheckCircle2, Send, Award, Shield } from "lucide-react"
+import { useState } from "react"
+import { Mail, MapPin, Phone } from "lucide-react"
 
-const EMPTY = { name: "", mobile: "", lookingFor: "", interestedIn: "" }
-
-/* ── Input Field ── */
-const InputField = memo(({
-  label, id, type = "text", placeholder, value, onChange, required,
-}: {
-  label: string
-  id: string
-  type?: string
-  placeholder: string
-  value: string
-  onChange: (v: string) => void
-  required?: boolean
-}) => (
-  <div className="form-field">
-    <label htmlFor={id} className="form-field__label">
-      {label}
-      {required && <span className="form-field__required" aria-label="required">*</span>}
-    </label>
-    <input
-      id={id}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      required={required}
-      className="form-field__input"
-      autoComplete="off"
-    />
-  </div>
-))
-InputField.displayName = "InputField"
-
-/* ── Select Field ── */
-const SelectField = memo(({
-  label, id, options, value, onChange, required,
-}: {
-  label: string
-  id: string
-  options: string[]
-  value: string
-  onChange: (v: string) => void
-  required?: boolean
-}) => (
-  <div className="form-field">
-    <label htmlFor={id} className="form-field__label">
-      {label}
-      {required && <span className="form-field__required" aria-label="required">*</span>}
-    </label>
-    <select
-      id={id}
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      required={required}
-      className="form-field__select"
-    >
-      <option value="">Select…</option>
-      {options.map(o => <option key={o} value={o}>{o}</option>)}
-    </select>
-  </div>
-))
-SelectField.displayName = "SelectField"
-
-/* ── Section ── */
 export default function ContactSection() {
-  const [form, setForm]     = useState(EMPTY)
+  const [form, setForm] = useState({ name: "", mobile: "", lookingFor: "", interestedIn: "" })
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef  = useRef<HTMLElement>(null)
-  const hasAnimated = useRef(false)
 
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting && !hasAnimated.current) {
-          setIsVisible(true)
-          hasAnimated.current = true
-        }
-      },
-      { threshold: 0.07 }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
-  const set = useCallback(
-    (k: keyof typeof EMPTY) => (v: string) => setForm(p => ({ ...p, [k]: v })),
-    []
-  )
-
-  const submit = useCallback(async () => {
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
     if (!form.name || !form.mobile) return
     setStatus("loading")
     try {
@@ -112,169 +25,36 @@ export default function ContactSection() {
       const data = await res.json()
       if (data.success) {
         setStatus("success")
-        setForm(EMPTY)
-      } else {
-        setStatus("error")
-        setTimeout(() => setStatus("idle"), 3000)
-      }
+        setForm({ name: "", mobile: "", lookingFor: "", interestedIn: "" })
+      } else setStatus("error")
     } catch {
       setStatus("error")
-      setTimeout(() => setStatus("idle"), 3000)
     }
-  }, [form])
-
-  const vis = isVisible
-
-  const contacts = [
-    { icon: Phone, label: "Call / WhatsApp", values: ["+91 9326709970"],                                      dark: true  },
-    { icon: Mail,  label: "Email",           values: ["kuwarb38@gmail.com"],                             dark: false },
-    { icon: MapPin, label: "Office Address", values: ["Flat 103/104, Laxmivihar Apartment,", "Wardha Road, Somalwada, Nagpur 440025"], dark: false },
-  ]
-
-  const badges = [
-    { icon: Award,        text: "MAHA RERA Approved" },
-    { icon: Shield,       text: "NMRDA Sanctioned"   },
-    { icon: CheckCircle2, text: "ISO Certified"       },
-    { icon: Phone,        text: "30-min Response"     },
-  ]
+  }
 
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      aria-label="Contact Mahalaxmi Infra"
-      className="contact"
-    >
-      <div className="label-strip">
-        <div className="label-strip__line" />
-        <span className="label-strip__text">Get In Touch</span>
-        <div className="label-strip__fill" />
-        <span className="label-strip__right">We Respond Fast</span>
-      </div>
-
-      <div className="section-inner">
-        <div className={`rv ${vis ? "on" : ""} d0 mb-section`}>
-          <div className="section-eyebrow">
-            <div className="section-eyebrow__line" />
-            <span className="section-eyebrow__label">Contact Us</span>
-          </div>
-          <h2 className="section-heading">
-            Let's <em>Find</em> Your<br /><span>Dream Plot</span>
-          </h2>
-          <p className="section-sub">
-            Reach out for a site visit, price list, or any query. Our team responds within 30 minutes.
-          </p>
-        </div>
-
-        <div className="contact__layout">
-          {/* ── Contact info ── */}
-          <div className={`rv ${vis ? "on" : ""} d1 contact__info`}>
-            <div className="contact__cards">
-              {contacts.map(c => {
-                const Icon = c.icon
-                return (
-                  <address
-                    key={c.label}
-                    className={`contact-card contact-card--${c.dark ? "dark" : "light"}`}
-                    style={{ fontStyle: "normal" }}
-                  >
-                    <div className="contact-card__inner">
-                      <div className={`contact-card__corner contact-card__corner--${c.dark ? "dark" : "light"}`} aria-hidden="true" />
-                      <div className={`contact-card__icon-wrap contact-card__icon-wrap--${c.dark ? "dark" : "light"}`}>
-                        <Icon size={16} className="contact-card__icon" aria-hidden="true" />
-                      </div>
-                      <div>
-                        <p className="contact-card__label">{c.label}</p>
-                        {c.values.map((v, i) => (
-                          <p key={i} className={`contact-card__value contact-card__value--${c.dark ? "dark" : "light"}`}>
-                            {v}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  </address>
-                )
-              })}
-            </div>
-
-            <div className="contact__badges" role="list" aria-label="Certifications">
-              {badges.map(({ icon: Icon, text }) => (
-                <div key={text} className="contact__badge" role="listitem">
-                  <Icon size={13} className="contact__badge-icon" aria-hidden="true" />
-                  <span className="contact__badge-text">{text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── Form ── */}
-          <div className={`rv ${vis ? "on" : ""} d2 contact__form-wrap`}>
-            <div className="contact__form-corner-tl" aria-hidden="true" />
-            <div className="contact__form-corner-br" aria-hidden="true" />
-
-            {status === "success" ? (
-              <div className="contact__success" role="alert" aria-live="polite">
-                <div className="contact__success-icon" aria-hidden="true">
-                  <CheckCircle2 size={26} className="icon-gold" />
-                </div>
-                <h3 className="contact__success-title">We'll be in touch!</h3>
-                <p className="contact__success-sub">Our team will call you within 30 minutes.</p>
-              </div>
-            ) : (
-              <>
-                <h3 className="contact__form-title">Schedule a Site Visit</h3>
-                <p className="contact__form-sub">Fill in your details and we'll get back to you shortly.</p>
-
-                <div className="contact__form-grid" role="group" aria-label="Contact form">
-                  <InputField label="Full Name"     id="contact-name"     placeholder="Your name"             value={form.name}        onChange={set("name")}        required />
-                  <InputField label="Mobile Number" id="contact-mobile"   placeholder="+91 XXXXX XXXXX"       value={form.mobile}      onChange={set("mobile")}      required type="tel" />
-                  <SelectField
-                    label="Looking For" id="contact-looking"
-                    options={["Residential Plot", "Commercial Plot", "Investment", "Other"]}
-                    value={form.lookingFor}
-                    onChange={set("lookingFor")}
-                  />
-                  <SelectField
-                    label="Interested In" id="contact-interested"
-                    options={["Mahalaxmi Nagar", "Tattva Apas", "Ongoing Project", "Completed Project", "Any Available"]}
-                    value={form.interestedIn}
-                    onChange={set("interestedIn")}
-                  />
-                </div>
-
-                {status === "error" && (
-                  <p className="contact__error" role="alert">Something went wrong. Please try again.</p>
-                )}
-
-                <button
-                  onClick={submit}
-                  disabled={status === "loading"}
-                  className="contact__submit"
-                  aria-label="Send enquiry"
-                >
-                  {status === "loading"
-                    ? "Sending…"
-                    : <><Send size={14} aria-hidden="true" /> Send Enquiry</>
-                  }
-                </button>
-              </>
-            )}
+    <section id="contact" className="bg-[var(--cream)] px-4 py-14 md:px-8">
+      <div className="mx-auto grid max-w-7xl gap-5 rounded-[32px] border border-[var(--green-border)] bg-white p-5 shadow-lg md:grid-cols-[1.05fr_.95fr] md:p-8">
+        <div className="relative overflow-hidden rounded-3xl bg-[var(--green)] p-6 text-white">
+          <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--gold-glow)] blur-2xl" />
+          <h2 className="relative text-3xl md:text-5xl">Let&apos;s Find Your Dream Plot</h2>
+          <p className="relative mt-3 text-white/80">Reach out for a site visit, price list, or any query. Our team responds within 30 minutes.</p>
+          <div className="relative mt-6 space-y-3 text-sm">
+            <p className="flex items-center gap-2"><Phone size={14} className="text-[var(--gold)]" /> +91 9326709970</p>
+            <p className="flex items-center gap-2"><Mail size={14} className="text-[var(--gold)]" /> kuwarb38@gmail.com</p>
+            <p className="flex items-center gap-2"><MapPin size={14} className="text-[var(--gold)]" /> Flat 103/104, Laxmivihar Apartment, Wardha Road, Somalwada, Nagpur 440025</p>
           </div>
         </div>
-      </div>
 
-      <div className="trust-bar">
-        <div className="trust-bar__inner">
-          <p className="trust-bar__label">Your data is safe with us</p>
-          <div className="trust-bar__items" role="list">
-            {["No Spam", "100% Confidential", "Quick Response"].map(label => (
-              <div key={label} className="trust-bar__item" role="listitem">
-                <div className="trust-bar__dot" aria-hidden="true" />
-                <span className="trust-bar__name">{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <form onSubmit={submit} className="grid gap-3 rounded-3xl bg-[var(--cream)] p-4 md:p-6">
+          <input required value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} placeholder="Full Name" className="rounded-xl border border-[var(--green-border)] bg-white px-3 py-3" />
+          <input required value={form.mobile} onChange={(e) => setForm((p) => ({ ...p, mobile: e.target.value }))} placeholder="Mobile Number" className="rounded-xl border border-[var(--green-border)] bg-white px-3 py-3" />
+          <input value={form.lookingFor} onChange={(e) => setForm((p) => ({ ...p, lookingFor: e.target.value }))} placeholder="Looking For" className="rounded-xl border border-[var(--green-border)] bg-white px-3 py-3" />
+          <input value={form.interestedIn} onChange={(e) => setForm((p) => ({ ...p, interestedIn: e.target.value }))} placeholder="Interested In" className="rounded-xl border border-[var(--green-border)] bg-white px-3 py-3" />
+          <button disabled={status === "loading"} className="rounded-xl bg-gradient-to-r from-[var(--green)] to-[#3f6f63] px-4 py-3 font-semibold text-white">{status === "loading" ? "Sending..." : "Send Enquiry"}</button>
+          {status === "success" && <p className="text-sm text-green-700">We&apos;ll be in touch!</p>}
+          {status === "error" && <p className="text-sm text-red-600">Something went wrong. Please try again.</p>}
+        </form>
       </div>
     </section>
   )
