@@ -1,146 +1,41 @@
 "use client"
 
-import { Wifi, Dumbbell, Trees, Zap, Shield, Users } from "lucide-react"
-import { useState, useRef, useEffect, useMemo, memo } from "react"
+import { Dumbbell, Shield, Trees, Users, Wifi, Zap } from "lucide-react"
 
 const amenities = [
-  { icon: Wifi,      title: "Smart Home",      description: "Advanced IoT integration for modern living.",      category: "facilities"    },
-  { icon: Dumbbell,  title: "Fitness Center",  description: "State-of-the-art gym & workout facilities.",       category: "wellness"      },
-  { icon: Trees,     title: "Green Spaces",    description: "Lush landscaping, parks and tree-lined paths.",    category: "wellness"      },
-  { icon: Zap,       title: "Power Backup",    description: "Uninterrupted power supply around the clock.",    category: "facilities"    },
-  { icon: Shield,    title: "24/7 Security",   description: "CCTV surveillance and on-site security team.",    category: "facilities"    },
-  { icon: Users,     title: "Community Hub",   description: "Vibrant spaces designed for social gatherings.",  category: "entertainment" },
-  { emoji: "🏊",     title: "Swimming Pool",   description: "Olympic-sized pool with children's splash zone.", category: "wellness"      },
-  { emoji: "🎮",     title: "Gaming Zone",     description: "Indoor games & entertainment for all ages.",      category: "entertainment" },
-  { emoji: "🧘",     title: "Yoga Studio",     description: "Dedicated wellness spaces for mind & body.",      category: "wellness"      },
-  { emoji: "🚗",     title: "Covered Parking", description: "Secure multi-level parking for every resident.", category: "facilities"    },
-  { emoji: "🎪",     title: "Banquet Hall",    description: "Premium event spaces for celebrations.",          category: "entertainment" },
-  { emoji: "👶",     title: "Kids Play Area",  description: "Safe, colorful playground for children.",         category: "entertainment" },
-] as const
-
-const TABS = ["all", "facilities", "wellness", "entertainment"] as const
-type Tab = typeof TABS[number]
-
-type Amenity = typeof amenities[number]
-
-const AmenityCard = memo(({ amenity, index, visible }: {
-  amenity: Amenity
-  index: number
-  visible: boolean
-}) => {
-  const Icon = "icon" in amenity ? amenity.icon : null
-  return (
-    <article className={`amenity-card stagger-item${visible ? " on" : ""} s${index}`}>
-      <div className="amenity-card__corner" aria-hidden="true" />
-      <div className="amenity-card__icon-wrap">
-        {Icon
-          ? <Icon size={18} className="amenity-card__icon" aria-hidden="true" />
-          : <span role="img" aria-label={amenity.title} style={{ fontSize: "1.2rem" }}>{"emoji" in amenity ? amenity.emoji : ""}</span>
-        }
-      </div>
-      <div>
-        <h3 className="amenity-card__title">{amenity.title}</h3>
-        <p className="amenity-card__desc">{amenity.description}</p>
-      </div>
-      <div className="amenity-card__bar" aria-hidden="true" />
-    </article>
-  )
-})
-AmenityCard.displayName = "AmenityCard"
+  { icon: Wifi, title: "Smart Home", description: "Advanced IoT integration for modern living." },
+  { icon: Dumbbell, title: "Fitness Center", description: "State-of-the-art gym & workout facilities." },
+  { icon: Trees, title: "Green Spaces", description: "Lush landscaping, parks and tree-lined paths." },
+  { icon: Zap, title: "Power Backup", description: "Uninterrupted power supply around the clock." },
+  { icon: Shield, title: "24/7 Security", description: "CCTV surveillance and on-site security team." },
+  { icon: Users, title: "Community Hub", description: "Vibrant spaces designed for social gatherings." },
+  { icon: null, title: "Swimming Pool", description: "Olympic-sized pool with children's splash zone.", emoji: "🏊" },
+  { icon: null, title: "Gaming Zone", description: "Indoor games & entertainment for all ages.", emoji: "🎮" },
+  { icon: null, title: "Yoga Studio", description: "Dedicated wellness spaces for mind & body.", emoji: "🧘" },
+  { icon: null, title: "Covered Parking", description: "Secure multi-level parking for every resident.", emoji: "🚗" },
+]
 
 export function AmenitiesSection() {
-  const [activeTab, setActiveTab] = useState<Tab>("all")
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef  = useRef<HTMLElement>(null)
-  const hasAnimated = useRef(false)
-
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting && !hasAnimated.current) {
-          setIsVisible(true)
-          hasAnimated.current = true
-        }
-      },
-      { threshold: 0.07, rootMargin: "60px" }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
-  const filtered = useMemo(
-    () => activeTab === "all" ? amenities : amenities.filter(a => a.category === activeTab),
-    [activeTab]
-  )
-
-  const vis = isVisible
-
   return (
-    <section
-      ref={sectionRef}
-      id="amenities"
-      aria-label="Amenities and lifestyle features"
-      className="amenities"
-    >
-      <div className="label-strip">
-        <div className="label-strip__line" />
-        <span className="label-strip__text">World-Class Amenities</span>
-        <div className="label-strip__fill" />
-        <span className="label-strip__right">{amenities.length} Amenities</span>
-      </div>
-
-      <div className="section-inner">
-        <div className={`rv ${vis ? "on" : ""} d0 amenities__header`}>
-          <div>
-            <div className="section-eyebrow">
-              <div className="section-eyebrow__line" />
-              <span className="section-eyebrow__label">Lifestyle Features</span>
-            </div>
-            <h2 className="section-heading">
-              Designed for <em>Modern</em><br /><span>Living</span>
-            </h2>
-          </div>
-
-          <div className="amenities__tabs" role="tablist" aria-label="Filter amenities">
-            {TABS.map(tab => (
-              <button
-                key={tab}
-                role="tab"
-                aria-selected={activeTab === tab}
-                onClick={() => setActiveTab(tab)}
-                className={`amenities__tab${activeTab === tab ? " active" : ""}`}
-              >
-                {tab === "all" ? "All" : tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
-          </div>
+    <section id="amenities" className="bg-[var(--cream)] px-4 py-12 md:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-5 flex items-end justify-between gap-3">
+          <h2 className="text-3xl md:text-5xl">Designed for Modern Living</h2>
+          <p className="text-sm text-[var(--text-muted)]">{amenities.length}+ Amenities</p>
         </div>
-
-        <div className="amenities__grid" role="list" aria-label="Amenities list">
-          {filtered.map((amenity, i) => (
-            <AmenityCard
-              key={amenity.title}
-              amenity={amenity}
-              index={i}
-              visible={vis}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="trust-bar">
-        <div className="trust-bar__inner">
-          <p className="trust-bar__label">Designed for modern living</p>
-          <div className="trust-bar__items" role="list">
-            {["Premium Build Quality", "Vastu Compliant", "24×7 Maintenance"].map(label => (
-              <div key={label} className="trust-bar__item" role="listitem">
-                <div className="trust-bar__dot" aria-hidden="true" />
-                <span className="trust-bar__name">{label}</span>
-              </div>
-            ))}
-          </div>
+        <div className="flex gap-3 overflow-x-auto pb-2 md:grid md:grid-cols-4 md:overflow-visible">
+          {amenities.map((item) => {
+            const Icon = item.icon
+            return (
+              <article key={item.title} className="min-w-[230px] rounded-2xl border border-[var(--green-border)] bg-white p-4 transition hover:-translate-y-1">
+                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--gold-light)]">
+                  {Icon ? <Icon size={16} className="text-[var(--gold)]" /> : <span>{item.emoji}</span>}
+                </div>
+                <h3 className="text-base font-semibold text-[var(--green)]">{item.title}</h3>
+                <p className="mt-1 text-sm text-[var(--text-mid)]">{item.description}</p>
+              </article>
+            )
+          })}
         </div>
       </div>
     </section>
