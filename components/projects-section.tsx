@@ -58,7 +58,7 @@ type TabValue = (typeof TABS)[number]["value"]
 const STATUS_CONFIG: Record<Project["status"], { label: string; bg: string; border: string; text: string }> = {
   ongoing:   { label: "● Ongoing",   bg: "rgba(201,134,43,0.15)", border: "rgba(201,134,43,0.4)", text: "#C9862B" },
   completed: { label: "✓ Completed",  bg: "rgba(48,83,74,0.2)",    border: "rgba(48,83,74,0.5)",   text: "#7bc8a4" },
-  upcoming:  { label: "◷ Coming Soon", bg: "rgba(255,255,255,0.08)", border: "rgba(255,255,255,0.2)", text: "rgba(255,255,255,0.5)" },
+  upcoming:  { label: "◷ Coming Soon", bg: "rgba(255,255,255,0.08)", border: "rgba(255,255,255,0.2)", text: "rgba(253, 5, 5, 0.5)" },
 }
 
 /* ─── ProjectCard ────────────────────────────────────────── */
