@@ -33,7 +33,7 @@ export function Footer() {
               <img
                 src="/Malaxmi-Final-Logo-1.png"
                 alt="Mahalaxmi Infra"
-                className="h-10 w-10 rounded-xl object-cover"
+                className="h-15 w-15 rounded-xl object-cover"
                 style={{ boxShadow: "0 0 0 1px rgba(201,134,43,0.3)" }}
               />
               <div>

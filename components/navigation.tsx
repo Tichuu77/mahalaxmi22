@@ -44,7 +44,7 @@ export function Navigation() {
               <img
                 src="/Malaxmi-Final-Logo-1.png"
                 alt="Mahalaxmi Infra Logo"
-                className="relative h-10 w-10 rounded-xl object-cover ring-1 ring-[var(--gold-border)]"
+                className="relative h-15 w-15 rounded-xl object-cover ring-1 ring-[var(--gold-border)]"
               />
             </div>
             <div>
