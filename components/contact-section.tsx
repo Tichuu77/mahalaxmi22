@@ -1,11 +1,43 @@
 "use client"
 
-import { useState } from "react"
-import { Mail, MapPin, Phone, Send, CheckCircle2 } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Mail, MapPin, Phone, Send, CheckCircle2, X } from "lucide-react"
+import ThankYouModal from "./thank-you-modal"
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", mobile: "", lookingFor: "", interestedIn: "" })
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [showPopup, setShowPopup] = useState(false)
+  const [timeRemaining, setTimeRemaining] = useState(3)
+
+  useEffect(() => {
+    setShowPopup(true)
+  }, [])
+
+  useEffect(() => {
+    if (status === "success") {
+      setShowPopup(false)
+      setTimeRemaining(3)
+      const interval = setInterval(() => {
+        setTimeRemaining((prev) => {
+          if (prev <= 1) {
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+
+      const timer = setTimeout(() => {
+        setStatus("idle")
+        setTimeRemaining(3)
+      }, 3000)
+
+      return () => {
+        clearInterval(interval)
+        clearTimeout(timer)
+      }
+    }
+  }, [status])
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,12 +70,102 @@ export default function ContactSection() {
     { icon: MapPin, label: "Office", value: "Flat 103/104, Laxmivihar Apartment, Wardha Road, Nagpur 440025", href: "#" },
   ]
 
-  return (
-    <section
-      id="contact"
-      className="relative overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #f5f2ec 0%, #fff 100%)" }}
+  const contactFields = [
+    { field: "name", placeholder: "Full Name *", type: "text" },
+    { field: "mobile", placeholder: "Mobile Number *", type: "tel" },
+    { field: "lookingFor", placeholder: "Looking For (e.g. Residential Plot)", type: "text" },
+    { field: "interestedIn", placeholder: "Interested In (e.g. Mahalaxmi Nagar-41)", type: "text" },
+  ]
+
+  const renderForm = (heading: string) => (
+    <form
+      onSubmit={submit}
+      className="rounded-3xl p-6 md:p-8"
+      style={{
+        background: "#fff",
+        border: "1px solid rgba(48,83,74,0.08)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+      }}
     >
+      <>
+        <h3 className="mb-5 text-xl font-bold text-[var(--text-dark)]">{heading}</h3>
+          <div className="grid gap-3">
+            {contactFields.map(({ field, placeholder, type }) => (
+              <input
+                key={field}
+                type={type}
+                required={field === "name" || field === "mobile"}
+                value={form[field as keyof typeof form]}
+                onChange={(e) => setForm((p) => ({ ...p, [field]: e.target.value }))}
+                placeholder={placeholder}
+                className="w-full rounded-2xl px-4 py-3.5 text-sm text-[var(--text-dark)] outline-none transition focus:ring-2"
+                style={{
+                  background: "rgba(245,242,236,0.7)",
+                  border: "1px solid rgba(48,83,74,0.1)",
+                }}
+              />
+            ))}
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="flex items-center justify-center gap-2 rounded-2xl py-4 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-60"
+              style={{
+                background: "linear-gradient(90deg, #30534A, #3f6f63)",
+                boxShadow: "0 6px 20px rgba(48,83,74,0.3)",
+              }}
+            >
+              {status === "loading" ? (
+                "Sending..."
+              ) : (
+                <>
+                  Send Enquiry <Send size={14} />
+                </>
+              )}
+            </button>
+            {status === "error" && (
+              <p className="mt-3 text-center text-xs text-red-500">
+                Something went wrong. Please try again or call us directly.
+              </p>
+            )}
+          </div>
+        </>
+    </form>
+  )
+
+  return (
+    <>
+      <ThankYouModal 
+        isOpen={status === "success"} 
+        timeRemaining={timeRemaining}
+      />
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="w-full max-w-3xl overflow-hidden rounded-[2rem] bg-white shadow-2xl">
+            <div className="flex items-start justify-between border-b border-slate-200 px-6 py-5">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--gold)]">Quick Contact</p>
+                <h2 className="mt-2 text-2xl font-bold text-[var(--text-dark)]">Send us a message</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowPopup(false)}
+                className="rounded-full p-2 text-slate-600 transition hover:bg-slate-100"
+                aria-label="Close contact popup"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="p-6 md:p-8">
+              {renderForm("Send an Enquiry")}
+            </div>
+          </div>
+        </div>
+      )}
+      <section
+        id="contact"
+        className="relative overflow-hidden"
+        style={{ background: "linear-gradient(160deg, #f5f2ec 0%, #fff 100%)" }}
+      >
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
         {/* Header */}
         <div className="mb-10 text-center">
@@ -124,89 +246,10 @@ export default function ContactSection() {
           </div>
 
           {/* Right: Form */}
-          <form
-            onSubmit={submit}
-            className="rounded-3xl p-6 md:p-8"
-            style={{
-              background: "#fff",
-              border: "1px solid rgba(48,83,74,0.08)",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
-            }}
-          >
-            {status === "success" ? (
-              <div className="flex flex-col items-center justify-center py-16 text-center">
-                <div
-                  className="mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-                  style={{ background: "rgba(48,83,74,0.08)" }}
-                >
-                  <CheckCircle2 size={32} className="text-[var(--green)]" />
-                </div>
-                <h3 className="mb-2 text-xl font-bold text-[var(--green)]">Message Sent!</h3>
-                <p className="text-sm text-[var(--text-muted)]">We&apos;ll get in touch within 30 minutes.</p>
-                <button
-                  type="button"
-                  onClick={() => setStatus("idle")}
-                  className="mt-5 rounded-full px-5 py-2 text-xs font-bold text-white"
-                  style={{ background: "var(--green)" }}
-                >
-                  Send Another
-                </button>
-              </div>
-            ) : (
-              <>
-                <h3 className="mb-5 text-xl font-bold text-[var(--text-dark)]">Send an Enquiry</h3>
-
-                <div className="grid gap-3">
-                  {[
-                    { field: "name", placeholder: "Full Name *", type: "text" },
-                    { field: "mobile", placeholder: "Mobile Number *", type: "tel" },
-                    { field: "lookingFor", placeholder: "Looking For (e.g. Residential Plot)", type: "text" },
-                    { field: "interestedIn", placeholder: "Interested In (e.g. Mahalaxmi Nagar-41)", type: "text" },
-                  ].map(({ field, placeholder, type }) => (
-                    <input
-                      key={field}
-                      type={type}
-                      required={field === "name" || field === "mobile"}
-                      value={form[field as keyof typeof form]}
-                      onChange={(e) => setForm((p) => ({ ...p, [field]: e.target.value }))}
-                      placeholder={placeholder}
-                      className="w-full rounded-2xl px-4 py-3.5 text-sm text-[var(--text-dark)] outline-none transition focus:ring-2"
-                      style={{
-                        background: "rgba(245,242,236,0.7)",
-                        border: "1px solid rgba(48,83,74,0.1)",
-                      }}
-                    />
-                  ))}
-
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className="flex items-center justify-center gap-2 rounded-2xl py-4 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-60"
-                    style={{
-                      background: "linear-gradient(90deg, #30534A, #3f6f63)",
-                      boxShadow: "0 6px 20px rgba(48,83,74,0.3)",
-                    }}
-                  >
-                    {status === "loading" ? (
-                      "Sending..."
-                    ) : (
-                      <>
-                        Send Enquiry <Send size={14} />
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                {status === "error" && (
-                  <p className="mt-3 text-center text-xs text-red-500">
-                    Something went wrong. Please try again or call us directly.
-                  </p>
-                )}
-              </>
-            )}
-          </form>
+          {renderForm("Send an Enquiry")}
         </div>
       </div>
     </section>
+    </>
   )
 }
